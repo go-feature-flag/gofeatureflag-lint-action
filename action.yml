@@ -1,18 +1,23 @@
-name: 'Hello World'
-description: 'Greet someone'
+name: 'Go Feature Flag Lint Action'
+description: 'Lint Go Feature Flag Config stored in a repo'
 inputs:
   config-root:  # id of input
-    description: 'Who to greet'
+    description: 'Root directory of the config file'
     required: true
-    default: 'World'
+    default: 'flags.yaml'
 outputs:
-  random-number:
-    description: "Random number"
-    value: ${{ steps.random-number-generator.outputs.random-number }}
+  lint-message: # id of output
+    description: "Reads the result of the linting step"
+    value: ${{ steps.lint.outputs.lint-message }}
 runs:
   using: "composite"
   steps:
+    ## Add the path to the action to the $PATH, as it will be able to 
+    ## run the linter script directly in next step
     - run: echo "${{ github.action_path }}" >> $GITHUB_PATH
       shell: bash
-    - run: run-lint.sh ${{ inputs.config-root }}
+    
+    ## run the linter script and capture the output
+    - id: lint
+      run: run-lint.sh ${{ inputs.config-root }}
       shell: bash
