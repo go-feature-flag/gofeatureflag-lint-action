@@ -4,7 +4,7 @@ inputs:
   config-root:  # id of input
     description: 'Root directory of the config file'
     required: true
-    default: 'flags.yaml'
+    default: './config'
 outputs:
   lint-message: # id of output
     description: "Reads the result of the linting step"
