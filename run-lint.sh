@@ -60,8 +60,12 @@ if [[ "$2" != "yaml" && "$2" != "json" && "$2" != "toml" ]]; then
 fi
 
 configDir=$(dirname "$1")
+configFile=$(basename "$1")
 ## Run the linter against the config file
-msg=$(docker run -v "${configDir}":/config --rm --name gofeatureflag_lint thomaspoignant/go-feature-flag-lint --input-format="$2" --input-file=/config/"$1")
+msg=$(docker run -v "${configDir}":/config --rm --name gofeatureflag_lint \
+            thomaspoignant/go-feature-flag-lint \
+            --input-format="$2" \
+            --input-file=/config/"${configFile}")
 
 ## Check if the linter has any errors
 if [[ $? != 0 || ! -z "${msg}" ]]; then
