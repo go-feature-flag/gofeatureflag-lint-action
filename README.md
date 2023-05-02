@@ -12,7 +12,7 @@ checks for errors in the config file and returns the error message if any.
 
 📢 Join Our Community: [![Slack](https://img.shields.io/badge/join-us%20on%20slack-gray.svg?longCache=true&logo=slack&colorB=green)](https://gophers.slack.com/messages/go-feature-flag)
 
-## Usage
+## Usage 📝
 
 ```yaml
 on: [push]
@@ -37,17 +37,22 @@ jobs:
           flagFiletype: 'yaml'
 ```
 
-## Inputs
+## Inputs ⚙️
 
-- `flagFilePath`: Provide the name and path of the config file. The default
-  value for the input is `config/flag-config.yaml`.
-- `flagFiletype`: The type of the config file. The default value for the input
-  is `yaml`. The value can be `yaml`, `toml`, or `json`.
+| **Name** | **Required** | **Defaults**  | **Description**  |
+|:-----:|:-----:|:-----:|:-----:|
+|  flagFilePath     | false      | `config/flag-config.yaml`  | Absolute or relative path of the file with name  |
+|   flagFiletype    | false      | `yaml`  | config file of type `yaml`, `toml`, or `json`  |
 
-## Outputs
+## Outputs ✉️
 
-`lintMessage`: The value will be blank if no error is found. If an error is
-found, the value will be the error message.
+| **Name** | **Description**  |
+|:-----:|:-----:|
+|  lintMessage     | `empty` if no error is found, else the value will be the error message  |
+
+## Share the Love ❤️
+
+Like this project? Please give it a ★ on our GitHub!
 
 ## License
 
