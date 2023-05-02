@@ -28,3 +28,7 @@ runs:
     - id: lint
       run: run-lint.sh ${{ inputs.flagFilePath }} ${{ inputs.flagFiletype }}
       shell: bash
+
+branding:
+  icon: 'flag'
+  color: 'blue'
