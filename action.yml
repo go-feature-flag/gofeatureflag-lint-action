@@ -1,14 +1,18 @@
-name: 'Go Feature Flag Lint Action'
-description: 'Lint Go Feature Flag Config stored in a repo'
-inputs:
-  config-root:  # id of input
+name: 'Go Feature Flag Lint Action' # name of the action
+description: 'Lint Go Feature Flag Config stored in a repo' # description of the action
+inputs: # inputs of the action used as `args` in `lint`
+  config-file-with-path:  # path to the config file
     description: 'Root directory of the config file'
-    required: true
+    required: true # make the input required
     default: './config'
+  config-filetype: # filetype of the config file can be yaml, toml, or json
+    description: 'Filetype of the config file'
+    required: true # make the input required
+    default: 'yaml' # default file format is yaml
 outputs:
-  lint-message: # id of output
+  lint-message: # output of the linting step
     description: "Reads the result of the linting step"
-    value: ${{ steps.lint.outputs.lint-message }}
+    value: ${{ steps.lint.outputs.lint-message }} # output of the linting step
 runs:
   using: "composite"
   steps:
