@@ -33,15 +33,15 @@ jobs:
 
         ## set the input parameters for the action
         with:
-          configFilePath: ${{ github.workspace }}/config/flag-config.yaml
-          configFiletype: 'yaml'
+          flagFilePath: ${{ github.workspace }}/config/flag-config.yaml
+          flagFiletype: 'yaml'
 ```
 
 ## Inputs
 
-- `configFilePath`: Provide the name and path of the config file. The default
+- `flagFilePath`: Provide the name and path of the config file. The default
   value for the input is `config/flag-config.yaml`.
-- `configFiletype`: The type of the config file. The default value for the input
+- `flagFiletype`: The type of the config file. The default value for the input
   is `yaml`. The value can be `yaml`, `toml`, or `json`.
 
 ## Outputs
