@@ -1,6 +1,6 @@
 # gofeatureflag-lint-action
 
-<p style="text-align:center">
+<p align="center">
     <img width="250" height="238" alt="Go Feature Flag" src="https://github.com/thomaspoignant/go-feature-flag/raw/main/logo.png" />
     <h2 align="center">GoFeatureFlagLint</h2>
     <p align="center">Lint your feature flag config files.</p>
