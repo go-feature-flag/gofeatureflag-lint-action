@@ -12,14 +12,13 @@ This action will perform the linting of the gofeatureflag config file.
 
 ## Inputs
 
-`config-root`: The root folder for the config flag. The default value for the
-folder is `./config`.
+- `flag-file`: The location of the GO Feature Flag configuration flag to lint. The default value is `flag-file.yaml`.
+- `format`: The format of your GO Feature Flag configuration flag (`yaml`, `toml`, `json`). The default value is `yaml`.
+
 ## Outputs
-
-`lint-message`: The value will be blank if no error is found. If an error is
-found, the value will be the error message.
+- `lint-message`: The value will be blank if no error is found. If an error is found, the value will be the error message.
+- 
 ## Example usage
-
 ```yaml
 on: [push]
 
@@ -32,13 +31,12 @@ jobs:
       # you must check out the repository
       - name: Checkout
         uses: actions/checkout@v3
-      - name: Hello world action step
-        uses: go-feature-flag/gofeatureflag-lint-action@__hash_value__
-        id: hello          
+      - name: Linting GO Feature Flag config file
+        uses: go-feature-flag/gofeatureflag-lint-action@v1
         with:
-          config-root: ${GITHUB_WORKSPACE}
+          flag-file: flag-file.yaml
+          format: yaml
 ```
 
 ## License
-
 This project is licensed under the MIT License.

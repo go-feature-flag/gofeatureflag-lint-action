@@ -1,23 +1,23 @@
 name: 'Go Feature Flag Lint Action'
-description: 'Lint Go Feature Flag Config stored in a repo'
+description: 'Lint Go Feature Flag Config stored in a repository'
 inputs:
-  config-root:  # id of input
-    description: 'Root directory of the config file'
-    required: true
-    default: './config'
+  flag-file:
+    required: false
+    description: "The path to the GO Feature Flag configuration to lint"
+    default: "flag-config.yaml"
+  format:
+    required: false
+    description: "The format of the file to lint (yaml, json, toml)"
+    default: "yaml"
 outputs:
-  lint-message: # id of output
+  lint-message:
     description: "Reads the result of the linting step"
     value: ${{ steps.lint.outputs.lint-message }}
 runs:
-  using: "composite"
-  steps:
-    ## Add the path to the action to the $PATH, as it will be able to 
-    ## run the linter script directly in next step
-    - run: echo "${{ github.action_path }}" >> $GITHUB_PATH
-      shell: bash
-    
-    ## run the linter script and capture the output
-    - id: lint
-      run: run-lint.sh ${{ inputs.config-root }}
-      shell: bash
+  using: "docker"
+  image: "docker://thomaspoignant/go-feature-flag-lint:v1"
+  volumes:
+    - ${{ github.workspace }}:/github_workspace
+  args:
+    - --input-format=${{ inputs.format }}
+    - --input-file=/github_workspace/${{ inputs.flag-file }}
