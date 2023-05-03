@@ -6,48 +6,38 @@
     <p align="center">Lint your feature flag config files.</p>
 </p>
 
-The `go-feature-flag/gofeatureflag-lint-action` Github action performs the
-linting of the [gofeatureflag](https://gofeatureflag.org/) flag config file. It
-checks for errors in the config file and returns the error message if any.
+This action will perform the linting of the gofeatureflag config file.
 
 📢 Join Our Community: [![Slack](https://img.shields.io/badge/join-us%20on%20slack-gray.svg?longCache=true&logo=slack&colorB=green)](https://gophers.slack.com/messages/go-feature-flag)
 
-## Usage
+## Inputs
+
+`config-root`: The root folder for the config flag. The default value for the
+folder is `./config`.
+## Outputs
+
+`lint-message`: The value will be blank if no error is found. If an error is
+found, the value will be the error message.
+## Example usage
 
 ```yaml
 on: [push]
 
 jobs:
-  gofeatureflag-lint-job:
+  feature-flag-lint:
     runs-on: ubuntu-latest
-    name: A demo job to run gofeatureflag-lint on a config file
+    name: A job to say hello
     steps:
-      
-      ## checkout the code from the repository
+      # To use this repository's private action,
+      # you must check out the repository
       - name: Checkout
         uses: actions/checkout@v3
-      
-      ## run the gofeatureflag-lint action
-      - name: Lint the config file
-        uses: go-feature-flag/gofeatureflag-lint-action@ea0524d562003105471e2ccdf3485e98db23fa48
-
-        ## set the input parameters for the action
+      - name: Hello world action step
+        uses: go-feature-flag/gofeatureflag-lint-action@__hash_value__
+        id: hello          
         with:
-          configFilePath: ${{ github.workspace }}/config/flag-config.yaml
-          configFiletype: 'yaml'
+          config-root: ${GITHUB_WORKSPACE}
 ```
-
-## Inputs
-
-- `configFilePath`: Provide the name and path of the config file. The default
-  value for the input is `config/flag-config.yaml`.
-- `configFiletype`: The type of the config file. The default value for the input
-  is `yaml`. The value can be `yaml`, `toml`, or `json`.
-
-## Outputs
-
-`lintMessage`: The value will be blank if no error is found. If an error is
-found, the value will be the error message.
 
 ## License
 
