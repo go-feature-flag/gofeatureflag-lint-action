@@ -3,7 +3,7 @@
 <p align="center">
     <img width="250" height="238" alt="Go Feature Flag" src="https://github.com/thomaspoignant/go-feature-flag/raw/main/logo.png" />
     <h2 align="center">GoFeatureFlagLint</h2>
-    <p align="center">Lint your feature flag config files.</p>
+    <p align="center">Lint your feature flag config files</p>
 </p>
 
 The `go-feature-flag/gofeatureflag-lint-action` Github action performs the
@@ -29,31 +29,31 @@ jobs:
       
       ## run the gofeatureflag-lint action
       - name: Lint the config file
-        uses: go-feature-flag/gofeatureflag-lint-action@ea0524d562003105471e2ccdf3485e98db23fa48
+        uses: go-feature-flag/gofeatureflag-lint-action@v1
 
         ## set the input parameters for the action
         with:
-          flagFilePath: ${{ github.workspace }}/config/flag-config.yaml
-          flagFiletype: 'yaml'
+          flag-file: ${{ github.workspace }}/config/flag-config.yaml
+          format: yaml
 ```
 
 ## Inputs ⚙️
 
 | **Name** | **Required** | **Defaults**  | **Description**  |
 |:-----:|:-----:|:-----:|:-----:|
-|  flagFilePath     | false      | `config/flag-config.yaml`  | Absolute or relative path of the file with name  |
-|   flagFiletype    | false      | `yaml`  | config file of type `yaml`, `toml`, or `json`  |
+|  flag-file     | false      | `config/flag-config.yaml`  | Absolute or relative path of the file with name  |
+|   format    | false      | `yaml`  | config file of type `yaml`, `toml`, or `json`  |
 
 ## Outputs ✉️
 
 | **Name** | **Description**  |
 |:-----:|:-----:|
-|  lintMessage     | `empty` if no error is found, else the value will be the error message  |
+|  lint-message     | `empty` if no error is found, else the value will be the error message  |
 
 ## Share the Love ❤️
 
 Like this project? Please give it a ★ on our GitHub!
 
-## License
+## License 💳
 
 This project is licensed under the MIT License.

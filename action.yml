@@ -3,17 +3,17 @@ description: 'Lint Go Feature Flag config stored in a repo' # description of the
 author: "go-feature-flag"
 
 inputs: # inputs of the action used as `args` in `lint`
-  flagFilePath:  # path to the flag file
+  flag-file:  # path to the flag file
     description: 'Absolute or relative path to the flag file'
     required: false
     default: './config/flags.yaml' # default path is './config/flags.yaml
-  flagFiletype: # filetype of the flag file can be yaml, toml, or json
+  format: # filetype of the flag file can be yaml, toml, or json
     description: 'Filetype of the flag file'
     required: false 
     default: 'yaml' # default file format is yaml
 
 outputs:
-  lintMessage: # output of the linting step
+  lint-message: # output of the linting step
     description: "Reads the result of the linting step"
     value: ${{ steps.lint.outputs.lint-message }} # output of the linting step
 
@@ -27,7 +27,7 @@ runs:
     
     ## run the linter script and capture the output
     - id: lint
-      run: run-lint.sh ${{ inputs.flagFilePath }} ${{ inputs.flagFiletype }}
+      run: run-lint.sh ${{ inputs.flag-file }} ${{ inputs.format }}
       shell: bash
 
 branding:
