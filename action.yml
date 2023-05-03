@@ -7,7 +7,7 @@ inputs: # inputs of the action used as `args` in `lint`
     description: 'Absolute or relative path to the flag file'
     required: false
     default: './config/flags.yaml' # default path is './config/flags.yaml
-  format: # filetype of the flag file can be yaml, toml, or json
+  format: # format of the flag file can be yaml, toml, or json
     description: 'Filetype of the flag file'
     required: false 
     default: 'yaml' # default file format is yaml
