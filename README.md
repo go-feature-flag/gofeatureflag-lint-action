@@ -33,7 +33,7 @@ jobs:
 
         ## set the input parameters for the action
         with:
-          flag-file: ${{ github.workspace }}/config/flag-config.yaml
+          flag-file: ./config/flag-config.yaml
           format: yaml
 ```
 
