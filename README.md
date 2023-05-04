@@ -7,7 +7,7 @@
 </p>
 
 The `go-feature-flag/gofeatureflag-lint-action` Github action performs the
-linting of the [gofeatureflag](https://gofeatureflag.org/) flag config file. It
+linting of the [GO Feature Flag](https://gofeatureflag.org/) flag config file. It
 checks for errors in the config file and returns the error message if any.
 
 📢 Join Our Community: [![Slack](https://img.shields.io/badge/join-us%20on%20slack-gray.svg?longCache=true&logo=slack&colorB=green)](https://gophers.slack.com/messages/go-feature-flag)
