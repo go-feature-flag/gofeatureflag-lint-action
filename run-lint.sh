@@ -78,4 +78,3 @@ if [[ $? != 0 || ! -z "${msg}" ]]; then
 fi
 
 fmtPrintln "info" "linting passed"
-exit 0
