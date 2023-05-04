@@ -35,8 +35,8 @@ function fmtPrintln() {
     esac
 }
 
-## Get the latest image of go-feature-flag-lint from source
-fmtPrintln "info" "pulling the latest image of go-feature-flag-lint from source"
+## Get the image of go-feature-flag-lint from source
+fmtPrintln "info" "pulling the image of go-feature-flag-lint:${GO_FEATURE_FLAG_LINT_DOCKER_TAG} from source"
 docker pull thomaspoignant/go-feature-flag-lint:${GO_FEATURE_FLAG_LINT_DOCKER_TAG}
 
 ## Input arguments
