@@ -63,7 +63,7 @@ configFile=$(basename "$flagFile")
 msg=$( { docker run -v "${configDir}":/config --rm --name gofeatureflag_lint \
             thomaspoignant/go-feature-flag-lint:v1 \
             --input-format="$2" \
-            --input-file=/config/"${configFile}"; } 2>&1)
+            --input-file=/config/"${configFile}"; } 2>&1 > /dev/null)
 
 
 ## Check if the linter has any errors
