@@ -64,10 +64,11 @@ configDir=$(dirname "$flagFile")
 configFile=$(basename "$flagFile")
 
 ## Run the linter against the config file
-msg=$(docker run -v "${configDir}":/config --rm --name gofeatureflag_lint \
+msg=$( { docker run -v "${configDir}":/config --rm --name gofeatureflag_lint \
             thomaspoignant/go-feature-flag-lint \
             --input-format="$2" \
-            --input-file=/config/"${configFile}")
+            --input-file=/config/"${configFile}"; } 2>&1)
+
 
 ## Check if the linter has any errors
 if [[ $? != 0 || ! -z "${msg}" ]]; then
