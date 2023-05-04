@@ -1,4 +1,5 @@
 # Reset
+GO_FEATURE_FLAG_LINT_DOCKER_TAG="v1"
 Color_Off='\033[0m'       # Text Reset
 
 # Regular Colors
@@ -34,6 +35,10 @@ function fmtPrintln() {
     esac
 }
 
+## Get the latest image of go-feature-flag-lint from source
+fmtPrintln "info" "pulling the latest image of go-feature-flag-lint from source"
+docker pull thomaspoignant/go-feature-flag-lint:${GO_FEATURE_FLAG_LINT_DOCKER_TAG}
+
 ## Input arguments
 fmtPrintln "info" "input arguments: $1 and $2"
 
@@ -61,9 +66,9 @@ configFile=$(basename "$flagFile")
 
 ## Run the linter against the config file
 msg=$( { docker run -v "${configDir}":/config --rm --name gofeatureflag_lint \
-            thomaspoignant/go-feature-flag-lint:v1 \
+            thomaspoignant/go-feature-flag-lint:${GO_FEATURE_FLAG_LINT_DOCKER_TAG} \
             --input-format="$2" \
-            --input-file=/config/"${configFile}"; } 2>&1 > /dev/null)
+            --input-file=/config/"${configFile}"; } 2>&1)
 
 
 ## Check if the linter has any errors
