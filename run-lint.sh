@@ -34,10 +34,6 @@ function fmtPrintln() {
     esac
 }
 
-## Get the latest image of go-feature-flag-lint from source
-fmtPrintln "info" "pulling the latest image of go-feature-flag-lint from source"
-docker pull thomaspoignant/go-feature-flag-lint:latest
-
 ## Input arguments
 fmtPrintln "info" "input arguments: $1 and $2"
 
@@ -65,7 +61,7 @@ configFile=$(basename "$flagFile")
 
 ## Run the linter against the config file
 msg=$( { docker run -v "${configDir}":/config --rm --name gofeatureflag_lint \
-            thomaspoignant/go-feature-flag-lint \
+            thomaspoignant/go-feature-flag-lint:v1 \
             --input-format="$2" \
             --input-file=/config/"${configFile}"; } 2>&1)
 
