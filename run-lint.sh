@@ -37,7 +37,7 @@ function fmtPrintln() {
 
 ## Get the image of go-feature-flag-lint from source
 fmtPrintln "info" "pulling the image of go-feature-flag-lint:${GO_FEATURE_FLAG_LINT_DOCKER_TAG} from source"
-docker pull thomaspoignant/go-feature-flag-lint:${GO_FEATURE_FLAG_LINT_DOCKER_TAG}
+docker pull gofeatureflag/go-feature-flag-lint:${GO_FEATURE_FLAG_LINT_DOCKER_TAG}
 
 ## Input arguments
 fmtPrintln "info" "input arguments: $1 and $2"
