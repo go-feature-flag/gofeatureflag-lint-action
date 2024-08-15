@@ -66,7 +66,7 @@ configFile=$(basename "$flagFile")
 
 ## Run the linter against the config file
 msg=$( { docker run -v "${configDir}":/config --rm --name gofeatureflag_lint \
-            thomaspoignant/go-feature-flag-lint:${GO_FEATURE_FLAG_LINT_DOCKER_TAG} \
+            gofeatureflag/go-feature-flag-lint:${GO_FEATURE_FLAG_LINT_DOCKER_TAG} \
             --input-format="$2" \
             --input-file=/config/"${configFile}"; } 2>&1)
 
