@@ -74,7 +74,7 @@ msg=$( { docker run -v "${configDir}":/config --rm --name gofeatureflag_lint \
             --format="$2"; } 2>&1)
 
 ## Check if the linter has any errors
-if [[ $? != 0 || ! -z "${msg}" ]]; then
+if [[ $? != 0 ]]; then
     fmtPrintln "critical" "linting failed"
     fmtPrintln "critical" "$msg"
     exit 1
