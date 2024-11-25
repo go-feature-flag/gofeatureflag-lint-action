@@ -1,5 +1,5 @@
 # Reset
-GO_FEATURE_FLAG_LINT_DOCKER_TAG="v1"
+GO_FEATURE_FLAG_CLI_DOCKER_TAG="v1"
 Color_Off='\033[0m'       # Text Reset
 
 # Regular Colors
@@ -36,8 +36,8 @@ function fmtPrintln() {
 }
 
 ## Get the image of go-feature-flag-lint from source
-fmtPrintln "info" "pulling the image of go-feature-flag-lint:${GO_FEATURE_FLAG_LINT_DOCKER_TAG} from source"
-docker pull gofeatureflag/go-feature-flag-lint:${GO_FEATURE_FLAG_LINT_DOCKER_TAG}
+fmtPrintln "info" "pulling the image of go-feature-flag-cli:${GO_FEATURE_FLAG_CLI_DOCKER_TAG} from source"
+docker pull gofeatureflag/go-feature-flag-cli:${GO_FEATURE_FLAG_CLI_DOCKER_TAG}
 
 ## Input arguments
 fmtPrintln "info" "input arguments: $1 and $2"
@@ -64,15 +64,17 @@ flagFile="$(pwd)/$1"
 configDir=$(dirname "$flagFile")
 configFile=$(basename "$flagFile")
 
+echo $configFile
+
 ## Run the linter against the config file
 msg=$( { docker run -v "${configDir}":/config --rm --name gofeatureflag_lint \
-            gofeatureflag/go-feature-flag-lint:${GO_FEATURE_FLAG_LINT_DOCKER_TAG} \
-            --input-format="$2" \
-            --input-file=/config/"${configFile}"; } 2>&1)
-
+            gofeatureflag/go-feature-flag-cli:${GO_FEATURE_FLAG_CLI_DOCKER_TAG} \
+            lint \
+            /config/"${configFile}" \
+            --format="$2"; } 2>&1)
 
 ## Check if the linter has any errors
-if [[ $? != 0 || ! -z "${msg}" ]]; then
+if [[ $? != 0 ]]; then
     fmtPrintln "critical" "linting failed"
     fmtPrintln "critical" "$msg"
     exit 1
