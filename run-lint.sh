@@ -35,7 +35,7 @@ function fmtPrintln() {
     esac
 }
 
-## Get the image of go-feature-flag-lint from source
+## Get the image of go-feature-flag-cli from source
 fmtPrintln "info" "pulling the image of go-feature-flag-cli:${GO_FEATURE_FLAG_CLI_DOCKER_TAG} from source"
 docker pull gofeatureflag/go-feature-flag-cli:${GO_FEATURE_FLAG_CLI_DOCKER_TAG}
 
@@ -64,8 +64,6 @@ flagFile="$(pwd)/$1"
 configDir=$(dirname "$flagFile")
 configFile=$(basename "$flagFile")
 
-echo $configFile
-
 ## Run the linter against the config file
 msg=$( { docker run -v "${configDir}":/config --rm --name gofeatureflag_lint \
             gofeatureflag/go-feature-flag-cli:${GO_FEATURE_FLAG_CLI_DOCKER_TAG} \
@@ -73,8 +71,28 @@ msg=$( { docker run -v "${configDir}":/config --rm --name gofeatureflag_lint \
             /config/"${configFile}" \
             --format="$2"; } 2>&1)
 
+## Capture the exit code of the linter (must be the first statement after the
+## `msg=$(...)` assignment so it reflects the docker run exit code)
+lintExitCode=$?
+
+## Expose the linter result as the action's `lint-message` output.
+## Empty when the config is valid, the error message otherwise.
+## (Reading it requires `continue-on-error: true` on the step, as the action
+## still exits non-zero to fail the CI job when linting fails.)
+if [[ -n "${GITHUB_OUTPUT}" ]]; then
+    if [[ ${lintExitCode} != 0 ]]; then
+        {
+            echo "lint-message<<__GOFF_EOF__"
+            echo "${msg}"
+            echo "__GOFF_EOF__"
+        } >> "${GITHUB_OUTPUT}"
+    else
+        echo "lint-message=" >> "${GITHUB_OUTPUT}"
+    fi
+fi
+
 ## Check if the linter has any errors
-if [[ $? != 0 ]]; then
+if [[ ${lintExitCode} != 0 ]]; then
     fmtPrintln "critical" "linting failed"
     fmtPrintln "critical" "$msg"
     exit 1

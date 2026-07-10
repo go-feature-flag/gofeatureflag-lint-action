@@ -1,0 +1,44 @@
+name: Update major and minor version tags
+
+# Keep the moving `v1` (and `v1.x`) aliases pointing at the latest release so
+# that consumers using `uses: go-feature-flag/gofeatureflag-lint-action@v1`
+# always get the newest compatible version (see issue #9).
+on:
+  release:
+    types: [released] # full (non-prerelease) releases only
+
+permissions:
+  contents: write # required to move/create the version tags
+
+jobs:
+  update-tags:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/github-script@v7
+        with:
+          script: |
+            const tag = context.payload.release.tag_name; // e.g. v1.2.3
+            const m = tag.match(/^v(\d+)\.(\d+)\.(\d+)$/);
+            if (!m) {
+              core.notice(`Skipping non-semver release tag: ${tag}`);
+              return;
+            }
+
+            // Resolve the commit the release tag points to (deref annotated tags).
+            const ref = await github.rest.git.getRef({ ...context.repo, ref: `tags/${tag}` });
+            let sha = ref.data.object.sha;
+            if (ref.data.object.type === 'tag') {
+              const t = await github.rest.git.getTag({ ...context.repo, tag_sha: sha });
+              sha = t.data.object.sha;
+            }
+
+            // Move (or create) the major `v1` and minor `v1.2` aliases.
+            for (const alias of [`v${m[1]}`, `v${m[1]}.${m[2]}`]) {
+              try {
+                await github.rest.git.updateRef({ ...context.repo, ref: `tags/${alias}`, sha, force: true });
+                core.info(`Moved ${alias} -> ${sha}`);
+              } catch (e) {
+                await github.rest.git.createRef({ ...context.repo, ref: `refs/tags/${alias}`, sha });
+                core.info(`Created ${alias} -> ${sha}`);
+              }
+            }

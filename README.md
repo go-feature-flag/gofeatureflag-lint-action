@@ -50,6 +50,10 @@ jobs:
 |:-----:|:-----:|
 |  lint-message     | `empty` if no error is found, else the value will be the error message  |
 
+> ℹ️ To read `lint-message` when linting fails, set `continue-on-error: true` on
+> the action's step — otherwise the failing action stops the job before you can
+> use the output.
+
 ## Share the Love ❤️
 
 Like this project? Please give it a ★ on our GitHub!
